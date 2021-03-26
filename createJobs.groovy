@@ -21,3 +21,19 @@ pipelineJob('theme-park-job') {
         }
     }
 }
+
+pipelineJob('theme-park-job-docker') {
+    definition {
+        cpsScm {
+            scm {
+                git {
+                    remote {
+                        url 'https://github.com/lahamisuahmed/themepark.git'
+                    }
+                    branch 'master'
+                    scriptPath('Jenkinsfile-docker')
+                }
+            }
+        }
+    }
+}
