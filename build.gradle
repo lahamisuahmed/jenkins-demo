@@ -14,19 +14,19 @@ docker {
     files "plugins.txt", "seedJob.xml"
 }
 
-//Process process
-//if (DefaultNativePlatform.getCurrentOperatingSystem().isWindows()) {
-//    process = "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock alpine stat -c %g /var/run/docker.sock".execute()
-//} else if (DefaultNativePlatform.getCurrentOperatingSystem().isLinux()) {
-//    process = "stat -c %g /var/run/docker.sock".execute()
-//}
-//else if (DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX()){
-//    process = "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock alpine stat -c %g /var/run/docker.sock".execute()}
-//else {
-//    throw new GradleException("Unsupported operating system. No way to find group of /var/run/docker.sock.")
-//}
+Process process
+if (DefaultNativePlatform.getCurrentOperatingSystem().isWindows()) {
+    process = "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock alpine stat -c %g /var/run/docker.sock".execute()
+} else if (DefaultNativePlatform.getCurrentOperatingSystem().isLinux()) {
+    process = "stat -c %g /var/run/docker.sock".execute()
+}
+else if (DefaultNativePlatform.getCurrentOperatingSystem().isMacOsX()){
+    process = "stat -f %g /var/run/docker.sock".execute()
+}else {
+    throw new GradleException("Unsupported operating system. No way to find group of /var/run/docker.sock.")
+}
 def out = new ByteArrayOutputStream()
-//process.waitForProcessOutput(out, System.err)
+process.waitForProcessOutput(out, System.err)
 String dockerSockGroupId = "root"
 dockerRun {
     name "${project.name}"
