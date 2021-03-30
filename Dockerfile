@@ -5,7 +5,7 @@ USER root
 # Install docker
 RUN curl -sSL https://get.docker.com/ | sh
 # Add jenkins user to docker group
-RUN usermod -a -G docker jenkins
+RUN usermod -aG docker jenkins
 # Switch back to default user
 USER jenkins
 COPY plugins.txt /usr/share/jenkins/ref/plugins.txt
